@@ -1,20 +1,21 @@
 pipeline {
   agent any
-  tools { nodejs "node-12" }
-
   stages {
     stage('build') {
       steps {
-        echo "Hello world"
+        echo 'Hello world'
         sh 'ls'
-        echo "file path"
+        echo 'file path'
         echo "$BRANCH_NAME"
         sh 'pwd'
         sh 'which npm'
         sh 'which node'
-        sh 'npm run build'
+        git(url: 'ssh://buildsys@nj.dbnetworks.com:29418/dbfx', branch: 'master')
       }
     }
 
+  }
+  tools {
+    nodejs 'node-12'
   }
 }
