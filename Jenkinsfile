@@ -9,7 +9,8 @@ pipeline {
         sh 'ls'
         echo "file path"
         sh 'pwd'
-        npm run build
+        sh 'which npm'
+        sh 'which node'
       }
     }
 
