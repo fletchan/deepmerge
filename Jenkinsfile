@@ -1,9 +1,14 @@
 pipeline {
   agent any
+  tools { nodejs "node-12" }
+
   stages {
-    stage('') {
+    stage('build') {
       steps {
-        build(job: 'build', propagate: true)
+        echo "Hello world"
+      }
+      steps {
+        sh 'ls'
       }
     }
 
