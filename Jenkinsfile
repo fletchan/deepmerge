@@ -3,7 +3,9 @@ pipeline {
   stages {
     stage('checkout') {
       steps('checkout') {
+        sh 'pwd; ls;'
         checkout scm
+        sh 'pwd; ls;'
       }
     }
     stage('build') {
