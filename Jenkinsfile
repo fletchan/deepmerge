@@ -20,7 +20,6 @@ pipeline {
         sh 'mkdir dbfx'
         sh 'cd dbfx'
         sh 'pwd'
-        git(url: 'ssh://buildsys@nj.dbnetworks.com:29418/dbfx', branch: 'master', credentialsId: 'buildsys-nj')
       }
     }
 
