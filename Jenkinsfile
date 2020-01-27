@@ -1,13 +1,6 @@
 pipeline {
   agent any
   stages {
-    stage('checkout') {
-      steps('checkout') {
-        sh 'pwd; ls;'
-        checkout scm
-        sh 'pwd; ls;'
-      }
-    }
     stage('build') {
       steps {
         echo 'Hello world'
@@ -19,7 +12,6 @@ pipeline {
         sh 'which node'
       }
     }
-
   }
   tools {
     nodejs 'node-12'
