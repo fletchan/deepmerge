@@ -46,7 +46,7 @@ def commentJiraIssues() {
             msg.findAll(issue_pattern).each { id ->
                 def ts = new Date(commit.getTimestamp())
 
-                jriaList << [ id: id, comment: "[JENKINS-PIPELINE]\n" +
+                jiraList << [ id: id, comment: "[JENKINS-PIPELINE]\n" +
                                 "Current Build: " + currentBuild.absoluteUrl + "\n" +
                                 "Commit Message: " + msg + "\n" +
                                 "Author: " + commit.getAuthor().getFullName() + "\n" +
