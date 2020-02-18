@@ -14,6 +14,7 @@ pipeline {
     }
     stage('comment jira') {
         steps {
+          script {
             commentJiraIssues().each { jiraChange ->
                 echo "jiraChange: " + jiraChange
 
@@ -23,6 +24,7 @@ pipeline {
                     failOnError: false
                 )
             }
+          }
         }
     }
   }
