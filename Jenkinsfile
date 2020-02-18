@@ -37,7 +37,7 @@ pipeline {
 def commentJiraIssues() {
     echo "commentJiraIssues"
 
-    def issue_pattern = "[Ss][Aa][Aa][Ss]-\\d+"
+    def issue_pattern = "[Ee][Pp][Oo]-\\d+"
     def jiraList = []
 
     currentBuild.changeSets.each { changeSet ->
