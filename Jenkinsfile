@@ -20,7 +20,8 @@ pipeline {
                 jiraAddComment(
                     idOrKey: jiraChange.id,
                     comment: jiraChange.comment,
-                    failOnError: false,
+                    failOnError: false
+                )
             }
         }
     }
