@@ -16,7 +16,7 @@ pipeline {
         steps {
           script {
             commentJiraIssues().each { jiraChange ->
-                echo "jiraChange: " + jiraChange
+                echo "jiraChange:  " + jiraChange
 
                 jiraAddComment(
                     idOrKey: jiraChange.id,
