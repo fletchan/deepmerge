@@ -50,7 +50,7 @@ def commentJiraIssues() {
                                 "Current Build: " + currentBuild.absoluteUrl + "\n" +
                                 "Commit Message: " + msg + "\n" +
                                 "Author: " + commit.getAuthor().getFullName() + "\n" +
-                                "Timestamp: " + ts.format("yyyyMMdd.HHmmss", TimeZone.getTimeZone('UTC'))+" UTC\n"
+                                "Timestamp: " + ts.format("MM-dd-yyyy HH:mm:ss", TimeZone.getTimeZone('UTC'))+" UTC\n"
                 ]
             }
         }
