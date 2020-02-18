@@ -20,7 +20,7 @@ pipeline {
 
                 jiraAddComment(
                     idOrKey: jiraChange.id,
-                    input: jiraChange.comment,
+                    input: [ body: jiraChange.comment ],
                     failOnError: false,
                     site: "jira",
                     auditLog: false
