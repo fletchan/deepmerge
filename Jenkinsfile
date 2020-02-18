@@ -22,6 +22,7 @@ pipeline {
                     idOrKey: jiraChange.id,
                     comment: jiraChange.comment,
                     failOnError: false
+                    site: "jira"
                 )
             }
           }
