@@ -40,7 +40,7 @@ pipeline {
 
             def issueUpdate = [ fields: [
               project: [ key: 'EPO' ],
-              labels: buildLabel
+              labels: [ buildLabel ]
             ]]
             def queryParams = [notifyUsers: true]
 
