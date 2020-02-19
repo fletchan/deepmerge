@@ -49,7 +49,8 @@ def commentJiraIssues() {
                 def ts = new Date(commit.getTimestamp())
 
                 jiraList << [ id: id, comment: "[JENKINS-PIPELINE]\n" +
-                                "Build: [Stack|" + currentBuild.absoluteUrl + "] " + currentBuild.number + "\n" +
+                                "Build: [Stack " + currentBuild.number + "|" + currentBuild.absoluteUrl + "] " + currentBuild.number + "\n" +
+                                "Result: " + currentBuild.result + "\n" +
                                 "Commit Message: " + msg + "\n" +
                                 "Author: " + commit.getAuthor().getFullName() + "\n" +
                                 "Timestamp: " + ts.format("MM-dd-yyyy HH:mm:ss", TimeZone.getTimeZone('UTC'))+" UTC\n"
