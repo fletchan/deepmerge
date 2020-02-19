@@ -2,13 +2,6 @@ pipeline {
   agent any
   stages {
     stage('build') {
-      when {
-        anyOf {
-          branch master
-          branch prod
-        }
-        beforeInput: true
-      }
       steps {
         echo 'Hello world'
         sh 'ls'
