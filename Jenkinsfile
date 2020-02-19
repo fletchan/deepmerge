@@ -44,7 +44,7 @@ pipeline {
             ]]
             def queryParams = [notifyUsers: false]
 
-            response = jiraEditIssue idOrKey: jiraChange.id, queryParams: queryParams, issue: issueUpdate
+            response = jiraEditIssue idOrKey: jiraChange.id, queryParams: queryParams, issue: issueUpdate, site: "jira"
 
             echo response.successful.toString()
             echo response.data.toString()
