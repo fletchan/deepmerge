@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('build') {
       when {
-        anyof {
+        anyOf {
           branch master
           input {
             message "Should we deploy"
