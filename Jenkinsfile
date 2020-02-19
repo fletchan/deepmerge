@@ -2,6 +2,15 @@ pipeline {
   agent any
   stages {
     stage('build') {
+      when {
+        anyof {
+          branch: master
+          input {
+            message "Should we deploy"
+          }
+        }
+        beforeInput: true
+      }
       steps {
         echo 'Hello world'
         sh 'ls'
