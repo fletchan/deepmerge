@@ -12,22 +12,22 @@ pipeline {
         sh 'which node'
       }
     }
-    stage('comment jira') {
-        steps {
-          script {
-            commentJiraIssues().each { jiraChange ->
-                echo "jiraChange: " + jiraChange
+  }
+  post {
+    always {
+      script {
+        commentJiraIssues().each { jiraChange ->
+            echo "jiraChange: " + jiraChange
 
-                jiraAddComment(
-                    idOrKey: jiraChange.id,
-                    input: [ body: jiraChange.comment ],
-                    failOnError: false,
-                    site: "jira",
-                    auditLog: false
-                )
-            }
-          }
+            jiraAddComment(
+                idOrKey: jiraChange.id,
+                input: [ body: jiraChange.comment ],
+                failOnError: false,
+                site: "jira",
+                auditLog: false
+            )
         }
+      }
     }
   }
   tools {
