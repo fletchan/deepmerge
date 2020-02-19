@@ -42,7 +42,7 @@ pipeline {
               project: [ key: 'EPO' ],
               labels: buildLabel
             ]]
-            def queryParams = [notifyUsers: false]
+            def queryParams = [notifyUsers: true]
 
             response = jiraEditIssue idOrKey: jiraChange.id, queryParams: queryParams, issue: issueUpdate, site: "jira"
 
