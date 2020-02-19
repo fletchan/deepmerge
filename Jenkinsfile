@@ -5,9 +5,7 @@ pipeline {
       when {
         anyOf {
           branch master
-          input {
-            message "Should we deploy"
-          }
+          branch prod
         }
         beforeInput: true
       }
