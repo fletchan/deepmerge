@@ -52,7 +52,7 @@ def commentJiraIssues() {
                                 "Build: [Stack " + currentBuild.number + "|" + currentBuild.absoluteUrl + "] " + currentBuild.number + "\n" +
                                 "Result: " + currentBuild.result + "\n" +
                                 "Commit Message: " + msg + "\n" +
-                                "Author: " + commit.getAuthor().getFullName() + "\n" +
+                                "Author: " + commit.getAuthor().getFullName() + " \n" +
                                 "Timestamp: " + ts.format("MM-dd-yyyy HH:mm:ss", TimeZone.getTimeZone('UTC'))+" UTC\n"
                 ]
             }
