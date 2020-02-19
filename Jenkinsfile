@@ -1,3 +1,5 @@
+def ENV;
+
 pipeline {
   agent any
   stages {
@@ -12,10 +14,19 @@ pipeline {
         sh 'which node'
       }
     }
+    stage('test') {
+      steps {
+        script {
+          ENV = 'test'
+        }
+      }
+    }
   }
   post {
     always {
       script {
+        def buildLabel = ENV + currentBuild.number
+
         commentJiraIssues().each { jiraChange ->
             echo "jiraChange: " + jiraChange
 
@@ -26,6 +37,17 @@ pipeline {
                 site: "jira",
                 auditLog: false
             )
+
+            def issueUpdate = [ fields: [
+              project: [ key: 'EPO' ],
+              labels: buildLabel
+            ]]
+            def queryParams = [notifyUsers: false]
+
+            response = jiraEditIssue idOrKey: jiraChange.id, queryParams: queryParams, issue: issueUpdate
+
+            echo response.successful.toString()
+            echo response.data.toString()
         }
       }
     }
