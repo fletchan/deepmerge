@@ -31,8 +31,10 @@ pipeline {
         def buildLabel = ENV + "-" + currentBuild.number
         def jiraList = getJiraIssuesInCurrentBuild()
         echo "List " + jiraList
-        addCommentsToJiraIssues(jiraList)
-        addLabelsToJiraIssues(jiraList)
+        if (!jiraList.isEmpty()) {
+          addCommentsToJiraIssues(jiraList)
+          addLabelsToJiraIssues(jiraList)
+        }
       }
     }
   }
@@ -45,7 +47,7 @@ pipeline {
 def getJiraIssuesInCurrentBuild() {
     echo "commentJiraIssues"
 
-    def issue_pattern = "[Ss][Aa][Aa][Ss]-\\d+"
+    def issue_pattern = "[Ee][Pp][Oo]-\\d+"
     def jiraList = []
 
     currentBuild.changeSets.each { changeSet ->
