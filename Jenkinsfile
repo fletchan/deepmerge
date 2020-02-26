@@ -35,6 +35,7 @@ pipeline {
         echo "Stack " + env.STACK
         if (!jiraList.isEmpty()) {
           addCommentsToJiraIssues(jiraList)
+          echo "Calling into add labales"
           addLabelsToJiraIssues(jiraList)
         }
       }
@@ -85,7 +86,11 @@ def addCommentsToJiraIssues(jiraList) {
             failOnError: false,
             auditLog: false
         )
+
+        echo "Done with one issue"
     }
+
+    echo "Done iterating through adding comments"
 }
 
 def addLabelsToJiraIssues(jiraList) {
