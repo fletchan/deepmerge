@@ -30,6 +30,8 @@ pipeline {
         commentJiraIssues().each { jiraChange ->
             echo "jiraChange: " + jiraChange
 
+            searchJira(jiraChange)
+
             jiraAddComment(
                 idOrKey: jiraChange.id,
                 input: [ body: jiraChange.comment ],
@@ -53,11 +55,13 @@ pipeline {
     }
   }
   tools {
-    nodejs 'node-12' 
+    nodejs 'node-12'
   }
 }
 
 def searchJira(jira) {
+    echo "Search jira"
+    echo jira
     def searchResults = jiraJqlSearch jql: "project = EPI and issuekey = 'EPO-10'"
     def issues = searchResults.data.issues
 
