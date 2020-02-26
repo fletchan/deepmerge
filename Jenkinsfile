@@ -1,4 +1,5 @@
 def ENV;
+def stack = 'dev'
 
 pipeline {
   environment {
