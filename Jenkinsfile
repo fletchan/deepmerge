@@ -1,6 +1,9 @@
 def ENV;
 
 pipeline {
+  enviroment {
+    JIRA_SITE = "jira"
+  }
   agent any
   stages {
     stage('build') {
