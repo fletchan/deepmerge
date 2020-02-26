@@ -60,12 +60,11 @@ pipeline {
 }
 
 def searchJira(jira) {
-    echo "Search jira"
-    echo jira
+    echo "Search jira" + jira
     def searchResults = jiraJqlSearch jql: "project = EPI and issuekey = 'EPO-10'"
     def issues = searchResults.data.issues
 
-    echo "issues: " issues
+    echo "issues: " + issues
 }
 
 @NonCPS
