@@ -32,6 +32,7 @@ pipeline {
         def buildLabel = ENV + "-" + currentBuild.number
         def jiraList = getJiraIssuesInCurrentBuild()
         echo "List " + jiraList
+        echo "Stack " + stack
         if (!jiraList.isEmpty()) {
           addCommentsToJiraIssues(jiraList)
           addLabelsToJiraIssues(jiraList)
@@ -67,6 +68,7 @@ def getJiraIssuesInCurrentBuild() {
 }
 
 def addCommentsToJiraIssues(jiraList) {
+  echo "Stack inside addComments " + stack
     jiraList.each { jira ->
         def ts = new Date(jira.commit.getTimestamp())
         String msg = jira.commit.getMsg()
