@@ -89,9 +89,11 @@ def addCommentsToJiraIssues(jiraList) {
 }
 
 def addLabelsToJiraIssues(jiraList) {
+  echo "Adding labels function"
     def jiraIssuesKeyList = []
     jiraList.each { jira ->
-        jiraIssueKeyList << "\"" + jira.issue.key + "\""
+        echo "Itererating through jira list" + jira
+        jiraIssueKeyList << "\"" + jira.issue + "\""
     }
   echo "jiraIssuesKeyList " + jiraIssueKeyList
     String jiraIssuesSearchStr = jiraIssuesKeyList.join(",")
