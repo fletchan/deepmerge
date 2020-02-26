@@ -1,7 +1,7 @@
 def ENV;
 
 pipeline {
-  enviroment {
+  environment {
     JIRA_SITE = "jira"
   }
   agent any
