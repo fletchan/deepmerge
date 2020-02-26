@@ -26,31 +26,9 @@ pipeline {
     always {
       script {
         def buildLabel = ENV + "-" + currentBuild.number
-
-        commentJiraIssues().each { jiraChange ->
-            echo "jiraChange: " + jiraChange
-
-            searchJira(jiraChange)
-
-            jiraAddComment(
-                idOrKey: jiraChange.id,
-                input: [ body: jiraChange.comment ],
-                failOnError: false,
-                site: "jira",
-                auditLog: false
-            )
-
-            def issueUpdate = [ fields: [
-              project: [ key: 'EPO' ],
-              labels: [ buildLabel ]
-            ]]
-            def queryParams = [notifyUsers: true]
-
-            response = jiraEditIssue idOrKey: jiraChange.id, queryParams: queryParams, issue: issueUpdate, site: "jira"
-
-            echo response.successful.toString()
-            echo response.data.toString()
-        }
+        def jiraList = getJiraIssuesInCurrentBuild()
+        addCommentsToJiraIssues(jiraList)
+        addLabelsToJiraIssues(jiraList)
       }
     }
   }
@@ -59,38 +37,74 @@ pipeline {
   }
 }
 
-def searchJira(jira) {
-    echo "Search jira" + jira
-    def searchResults = jiraJqlSearch jql: "project = EPO and issuekey in ('EPO-10', 'EPO-9')", site: "jira"
-    def issues = searchResults.data.issues
-    
-    echo "issues: " + issues
-}
-
 @NonCPS
-def commentJiraIssues() {
+def getJiraIssuesInCurrentBuild() {
     echo "commentJiraIssues"
 
-    def issue_pattern = "[Ee][Pp][Oo]-\\d+"
+    def issue_pattern = "[Ss][Aa][Aa][Ss]-\\d+"
     def jiraList = []
 
     currentBuild.changeSets.each { changeSet ->
         changeSet.each { commit ->
-            String msg = commit.getMsg()
-            msg.findAll(issue_pattern).each { id ->
-                def ts = new Date(commit.getTimestamp())
-
-                jiraList << [ id: id, comment: "[JENKINS-PIPELINE]\n" +
-                                "Build: [Stack " + currentBuild.number + "|" + currentBuild.absoluteUrl + "] " + currentBuild.number + "\n" +
-                                "Result: " + currentBuild.result + "\n" +
-                                "Commit Message: " + msg + "\n" +
-                                "Author: " + commit.getAuthor().getFullName() + " \n" +
-                                "Timestamp: " + ts.format("MM-dd-yyyy HH:mm:ss", TimeZone.getTimeZone('UTC'))+" UTC\n"
+            msg.findAll(issue_pattern).each { issue ->
+                jiraList << [
+                    issue: issue,
+                    commit: commit
                 ]
             }
         }
     }
 
-    echo "jiras: " + jiraList
     jiraList
+}
+
+def addCommentsToJiraIssues(jiraList) {
+    jiraList.each { jira ->
+        def ts = new Date(jira.commit.getTimestamp())
+        String msg = jira.commit.getMsg()
+        String comment = "[JENKINS-PIPELINE]\n" +
+                         "Build: [" + stack + currentBuild.number + "|" + currentBuild.absoluteUrl + "]\n" +
+                         "Result: " + currentBuild.result + "\n" +
+                         "Commit Message: " + msg + "\n" +
+                         "Author: " + jira.commit.getAuthor().getFullName() + " \n" +
+                         "Timestamp: " + ts.format("MM-dd-yyyy HH:mm:ss", TimeZone.getTimeZone('UTC'))+" UTC\n"
+
+        jiraAddComment(
+            idOrKey: jira.issue,
+            input: [ body: comment ],
+            failOnError: false,
+            auditLog: false
+        )
+    }
+}
+
+def addLabelsToJiraIssues(jiraList) {
+    String jiraIssuesKeyList = ''
+    jiraList.each { jira ->
+        jiraIssueKeyList += ',' + jira.issue.key
+    }
+
+    def searchReults = jiraJqlSearch jql: "project = SAAS and issuekey in (" + jiraIssuesKeyList + ")"
+    def issues = searchReults.data.issues
+    def labels = []
+
+    jiraList.each { jira ->
+        issues.each { issue ->
+            if (jira.issue == issue.key) {
+                labels = issue.fields.labels
+            }
+        }
+
+        labels << buildLabel
+
+        jiraEditIssue(
+            idOrKey: jira.issue,
+            issue: [
+                fields: [
+                    project: [ key: 'SAAS' ],
+                    labels: [ labels ]
+                ]
+            ]
+        )
+    }
 }
