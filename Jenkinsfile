@@ -30,6 +30,7 @@ pipeline {
       script {
         def buildLabel = ENV + "-" + currentBuild.number
         def jiraList = getJiraIssuesInCurrentBuild()
+        echo "List " + jiraList
         addCommentsToJiraIssues(jiraList)
         addLabelsToJiraIssues(jiraList)
       }
@@ -87,8 +88,9 @@ def addLabelsToJiraIssues(jiraList) {
     jiraList.each { jira ->
         jiraIssueKeyList << "\"jira.issue.key\""
     }
-
+  echo "jiraIssuesKeyList " + jiraIssueKeyList
     String jiraIssuesSearchStr = jiraIssuesKeyList.join(",")
+    echo "query string " + jiraIssuesSearchStr
     def searchReults = jiraJqlSearch jql: "project = SAAS and issuekey in (" + jiraIssuesSearchStr + ")"
     def issues = searchReults.data.issues
     def labels = []
