@@ -57,6 +57,13 @@ pipeline {
   }
 }
 
+def searchJira(jira) {
+    def searchResults = jiraJqlSearch jql: "project = EPI and issuekey = 'EPO-10'"
+    def issues = searchResults.data.issues
+
+    echo "issues: " issues
+}
+
 @NonCPS
 def commentJiraIssues() {
     echo "commentJiraIssues"
