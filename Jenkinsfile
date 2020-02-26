@@ -71,6 +71,7 @@ def getJiraIssuesInCurrentBuild() {
 def addCommentsToJiraIssues(jiraList) {
   echo "Stack inside addComments " + env.STACK
     jiraList.each { jira ->
+        echo "What do we get for jira " + jira
         def ts = new Date(jira.commit.getTimestamp())
         String msg = jira.commit.getMsg()
         String comment = "[JENKINS-PIPELINE]\n" +
