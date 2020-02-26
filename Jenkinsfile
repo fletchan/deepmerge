@@ -89,7 +89,7 @@ def addCommentsToJiraIssues(jiraList) {
 def addLabelsToJiraIssues(jiraList) {
     def jiraIssuesKeyList = []
     jiraList.each { jira ->
-        jiraIssueKeyList << "\"jira.issue.key\""
+        jiraIssueKeyList << "\"" + jira.issue.key + "\""
     }
   echo "jiraIssuesKeyList " + jiraIssueKeyList
     String jiraIssuesSearchStr = jiraIssuesKeyList.join(",")
