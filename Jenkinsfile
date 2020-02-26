@@ -83,12 +83,13 @@ def addCommentsToJiraIssues(jiraList) {
 }
 
 def addLabelsToJiraIssues(jiraList) {
-    String jiraIssuesKeyList = ''
+    def jiraIssuesKeyList = []
     jiraList.each { jira ->
-        jiraIssueKeyList += ',' + jira.issue.key
+        jiraIssueKeyList << "\"jira.issue.key\""
     }
 
-    def searchReults = jiraJqlSearch jql: "project = SAAS and issuekey in (" + jiraIssuesKeyList + ")"
+    String jiraIssuesSearchStr = jiraIssuesKeyList.join(",")
+    def searchReults = jiraJqlSearch jql: "project = SAAS and issuekey in (" + jiraIssuesSearchStr + ")"
     def issues = searchReults.data.issues
     def labels = []
 
