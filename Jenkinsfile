@@ -1,9 +1,9 @@
 def ENV;
-def stack = 'dev'
 
 pipeline {
   environment {
     JIRA_SITE = "jira"
+    STACK = 'dev"'
   }
   agent any
   stages {
@@ -32,7 +32,7 @@ pipeline {
         def buildLabel = ENV + "-" + currentBuild.number
         def jiraList = getJiraIssuesInCurrentBuild()
         echo "List " + jiraList
-        echo "Stack " + stack
+        echo "Stack " + env.STACK
         if (!jiraList.isEmpty()) {
           addCommentsToJiraIssues(jiraList)
           addLabelsToJiraIssues(jiraList)
@@ -68,12 +68,12 @@ def getJiraIssuesInCurrentBuild() {
 }
 
 def addCommentsToJiraIssues(jiraList) {
-  echo "Stack inside addComments " + stack
+  echo "Stack inside addComments " + env.STACK
     jiraList.each { jira ->
         def ts = new Date(jira.commit.getTimestamp())
         String msg = jira.commit.getMsg()
         String comment = "[JENKINS-PIPELINE]\n" +
-                         "Build: [" + stack + currentBuild.number + "|" + currentBuild.absoluteUrl + "]\n" +
+                         "Build: [" + env.STACK + currentBuild.number + "|" + currentBuild.absoluteUrl + "]\n" +
                          "Result: " + currentBuild.result + "\n" +
                          "Commit Message: " + msg + "\n" +
                          "Author: " + jira.commit.getAuthor().getFullName() + " \n" +
