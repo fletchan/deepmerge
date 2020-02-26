@@ -25,7 +25,7 @@ pipeline {
   post {
     always {
       script {
-        def buildLabel = ENV + currentBuild.number
+        def buildLabel = ENV + "-" + currentBuild.number
 
         commentJiraIssues().each { jiraChange ->
             echo "jiraChange: " + jiraChange
@@ -40,7 +40,7 @@ pipeline {
 
             def issueUpdate = [ fields: [
               project: [ key: 'EPO' ],
-              labels: [ buildLabel ]
+              labels: [ add: buildLabel ]
             ]]
             def queryParams = [notifyUsers: true]
 
@@ -53,7 +53,7 @@ pipeline {
     }
   }
   tools {
-    nodejs 'node-12'
+    nodejs 'node-12' 
   }
 }
 
