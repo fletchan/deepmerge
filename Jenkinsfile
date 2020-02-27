@@ -123,7 +123,7 @@ def addLabelsToJiraIssues(jiraList) {
         }
 
         if (labels.isEmpty()) {
-          echo "skipping loop"
+          echo "skipping loop "
           return;
         }
 
