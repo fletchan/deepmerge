@@ -63,7 +63,7 @@ def getJiraIssuesInCurrentBuild() {
                     issue: issue,
                     commitMsg: msg,
                     commitAuthor: author,
-                    commitTimestamp = timestamp
+                    commitTimestamp: timestamp
                 ]
             }
         }
