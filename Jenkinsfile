@@ -1,9 +1,7 @@
-def ENV;
-
 pipeline {
   environment {
     JIRA_SITE = "jira"
-    STACK = 'dev'
+    STACK = ""
   }
   agent any
   stages {
@@ -21,7 +19,12 @@ pipeline {
     stage('test') {
       steps {
         script {
-          ENV = 'test'
+          if (env.GIT_BRANCH == 'master') {
+            env.STACK = 'dev'
+          }
+
+          echo "Build branch: " + env.GIT_BRANCH
+          echo "Stack: " + env.STACK
         }
       }
     }
