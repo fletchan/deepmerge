@@ -124,7 +124,7 @@ def addLabelsToJiraIssues(jiraList) {
 
         if (labels.isEmpty()) {
           echo "skipping loop"
-          continue;
+          return;
         }
 
         echo "Do we get here after empty check"
