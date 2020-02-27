@@ -35,9 +35,14 @@ pipeline {
         echo "Stack " + env.STACK
         if (!jiraList.isEmpty()) {
           //addCommentsToJiraIssues(jiraList)
-          echo "Calling into add labales"
-          addLabelsToJiraIssues(jiraList)
+          //addLabelsToJiraIssues(jiraList)
         }
+
+        sh("git config user.name 'buildsys'")
+        sh("git config user.email 'buildsys@dbnetworks.com'")
+        sh("git tag -a " + buildLabel)
+        sh("git push --tags")
+
       }
     }
   }
