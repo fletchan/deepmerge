@@ -40,7 +40,7 @@ pipeline {
 
         sh("git config user.name 'buildsys'")
         sh("git config user.email 'buildsys@dbnetworks.com'")
-        sh("git tag -a " + buildLabel)
+        sh("git tag " + buildLabel)
         sh("git push --tags")
 
       }
