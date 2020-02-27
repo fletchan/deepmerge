@@ -34,7 +34,7 @@ pipeline {
         echo "List " + jiraList
         echo "Stack " + env.STACK
         if (!jiraList.isEmpty()) {
-          addCommentsToJiraIssues(jiraList)
+          //addCommentsToJiraIssues(jiraList)
           echo "Calling into add labales"
           addLabelsToJiraIssues(jiraList)
         }
@@ -113,7 +113,9 @@ def addLabelsToJiraIssues(jiraList) {
     def labels = []
 
     jiraList.each { jira ->
+        echo "\n jira: " + jira + "\n"
         issues.each { issue ->
+            echo "\n issue: " + issue
             if (jira.issue == issue.key) {
                 labels = issue.fields.labels
             }
