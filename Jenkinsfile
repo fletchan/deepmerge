@@ -1,4 +1,4 @@
-def stack = ""
+stack = ""
 
 pipeline {
   environment {
@@ -27,7 +27,7 @@ pipeline {
           }
 
           echo "Build branch: " + env.GIT_BRANCH
-          echo "Stack: " + env.STACK
+          echo "Stack: " + stack
         }
       }
     }
