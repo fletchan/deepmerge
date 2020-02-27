@@ -2,7 +2,7 @@ def ENV;
 
 pipeline {
   environment {
-    JIRA_SITE = "jiraCloud"
+    JIRA_SITE = "jira"
     STACK = 'dev"'
   }
   agent any
