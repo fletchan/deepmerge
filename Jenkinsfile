@@ -108,7 +108,7 @@ def addLabelsToJiraIssues(jiraList) {
   echo "jiraIssuesKeyList " + jiraIssuesKeyList
     String jiraIssuesSearchStr = jiraIssuesKeyList.join(",")
     echo "query string " + jiraIssuesSearchStr
-    def searchResults = jiraJqlSearch jql: "project = SAAS and issuekey in (" + jiraIssuesSearchStr + ")"
+    def searchResults = jiraJqlSearch jql: "project = EPO and issuekey in (" + jiraIssuesSearchStr + ")"
     echo "Search results " + searchResults
     def issues = searchResults.data.issues
     def labels = []
@@ -123,7 +123,7 @@ def addLabelsToJiraIssues(jiraList) {
         }
 
         if (labels.isEmpty()) {
-          echo "skipping loop "
+          echo "skipping loop"
           return;
         }
 
@@ -131,7 +131,7 @@ def addLabelsToJiraIssues(jiraList) {
 
         labels << buildLabel
 
-        jiraEditIssue(
+        /*jiraEditIssue(
             idOrKey: jira.issue,
             issue: [
                 fields: [
@@ -139,6 +139,6 @@ def addLabelsToJiraIssues(jiraList) {
                     labels: labels
                 ]
             ]
-        )
+        )*/
     }
 }
