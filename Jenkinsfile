@@ -3,7 +3,7 @@ def ENV;
 pipeline {
   environment {
     JIRA_SITE = "jira"
-    STACK = 'dev"'
+    STACK = 'dev'
   }
   agent any
   stages {
