@@ -20,7 +20,9 @@ pipeline {
       steps {
         script {
           if (env.GIT_BRANCH == 'master') {
+            echo "Inside of if master"
             env.STACK = 'dev'
+            echo "Right after set: ${env.STACK}"
           }
 
           echo "Build branch: " + env.GIT_BRANCH
