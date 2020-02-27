@@ -1,7 +1,8 @@
+def stack = ""
+
 pipeline {
   environment {
     JIRA_SITE = "jira"
-    STACK = ""
   }
   agent any
   stages {
@@ -21,8 +22,8 @@ pipeline {
         script {
           if (env.GIT_BRANCH == 'master') {
             echo "Inside of if master"
-            env.STACK = 'dev'
-            echo "Right after set: ${env.STACK}"
+            stack = 'dev'
+            echo "Right after set: ${stack}"
           }
 
           echo "Build branch: " + env.GIT_BRANCH
@@ -38,6 +39,7 @@ pipeline {
         def jiraList = getJiraIssuesInCurrentBuild()
         echo "List " + jiraList
         echo "Stack " + env.STACK
+        testFunction()
         if (!jiraList.isEmpty()) {
           //addCommentsToJiraIssues(jiraList)
           //addLabelsToJiraIssues(jiraList)
@@ -56,6 +58,10 @@ pipeline {
   }
 }
 
+def testFunction() {
+  echo "Stack: " + stack
+  return
+}
 @NonCPS
 def getJiraIssuesInCurrentBuild() {
     echo "commentJiraIssues"
