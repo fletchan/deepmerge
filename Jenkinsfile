@@ -68,6 +68,7 @@ def getJiraIssuesInCurrentBuild() {
     jiraList
 }
 
+@NonCPS
 def addCommentsToJiraIssues(jiraList) {
   echo "Stack inside addComments " + env.STACK
     jiraList.each { jira ->
