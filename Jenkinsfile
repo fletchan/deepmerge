@@ -56,10 +56,12 @@ def getJiraIssuesInCurrentBuild() {
     currentBuild.changeSets.each { changeSet ->
         changeSet.each { commit ->
             String msg = commit.getMsg()
+            Seting author = commit.getAuthor().getFullName()
             msg.findAll(issue_pattern).each { issue ->
                 jiraList << [
                     issue: issue,
-                    commit: commit
+                    commitMsg: msg,
+                    commitAuthor: author
                 ]
             }
         }
@@ -68,18 +70,16 @@ def getJiraIssuesInCurrentBuild() {
     jiraList
 }
 
-@NonCPS
 def addCommentsToJiraIssues(jiraList) {
   echo "Stack inside addComments " + env.STACK
     jiraList.each { jira ->
         echo "What do we get for jira " + jira
         def ts = new Date(jira.commit.getTimestamp())
-        String msg = jira.commit.getMsg()
         String comment = "[JENKINS-PIPELINE]\n" +
                          "Build: [" + env.STACK + currentBuild.number + "|" + currentBuild.absoluteUrl + "]\n" +
                          "Result: " + currentBuild.result + "\n" +
-                         "Commit Message: " + msg + "\n" +
-                         "Author: " + jira.commit.getAuthor().getFullName() + " \n" +
+                         "Commit Message: " + jira.commitMsg + "\n" +
+                         "Author: " + jira.commitAuthor + " \n" +
                          "Timestamp: " + ts.format("MM-dd-yyyy HH:mm:ss", TimeZone.getTimeZone('UTC'))+" UTC\n"
 
         jiraAddComment(
