@@ -108,8 +108,9 @@ def addLabelsToJiraIssues(jiraList) {
   echo "jiraIssuesKeyList " + jiraIssuesKeyList
     String jiraIssuesSearchStr = jiraIssuesKeyList.join(",")
     echo "query string " + jiraIssuesSearchStr
-    def searchReults = jiraJqlSearch jql: "project = SAAS and issuekey in (" + jiraIssuesSearchStr + ")"
-    def issues = searchReults.data.issues
+    def searchResults = jiraJqlSearch jql: "project = EPO and issuekey in (" + jiraIssuesSearchStr + ")"
+    echo "Search results " + searchResults
+    def issues = searchResults.data.issues
     def labels = []
 
     jiraList.each { jira ->
