@@ -56,7 +56,7 @@ def getJiraIssuesInCurrentBuild() {
     currentBuild.changeSets.each { changeSet ->
         changeSet.each { commit ->
             String msg = commit.getMsg()
-            Seting author = commit.getAuthor().getFullName()
+            String author = commit.getAuthor().getFullName()
             msg.findAll(issue_pattern).each { issue ->
                 jiraList << [
                     issue: issue,
