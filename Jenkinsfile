@@ -103,7 +103,7 @@ def addLabelsToJiraIssues(jiraList) {
         echo "Itererating through jira list" + jira
         jiraIssuesKeyList << "\"" + jira.issue + "\""
     }
-  echo "jiraIssuesKeyList " + jiraIssueKeyList
+  echo "jiraIssuesKeyList " + jiraIssuesKeyList
     String jiraIssuesSearchStr = jiraIssuesKeyList.join(",")
     echo "query string " + jiraIssuesSearchStr
     def searchReults = jiraJqlSearch jql: "project = SAAS and issuekey in (" + jiraIssuesSearchStr + ")"
