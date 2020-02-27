@@ -2,7 +2,7 @@ def ENV;
 
 pipeline {
   environment {
-    JIRA_SITE = "jira"
+    JIRA_SITE = "jiraCloud"
     STACK = 'dev"'
   }
   agent any
@@ -101,7 +101,7 @@ def addLabelsToJiraIssues(jiraList) {
     def jiraIssuesKeyList = []
     jiraList.each { jira ->
         echo "Itererating through jira list" + jira
-        jiraIssueKeyList << "\"" + jira.issue + "\""
+        jiraIssuesKeyList << "\"" + jira.issue + "\""
     }
   echo "jiraIssuesKeyList " + jiraIssueKeyList
     String jiraIssuesSearchStr = jiraIssuesKeyList.join(",")
@@ -118,7 +118,7 @@ def addLabelsToJiraIssues(jiraList) {
         }
 
         labels << buildLabel
-
+echo "What labels will we add " + labels
         jiraEditIssue(
             idOrKey: jira.issue,
             issue: [
