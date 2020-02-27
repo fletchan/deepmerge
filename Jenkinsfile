@@ -57,11 +57,13 @@ def getJiraIssuesInCurrentBuild() {
         changeSet.each { commit ->
             String msg = commit.getMsg()
             String author = commit.getAuthor().getFullName()
+            String timestamp = commit.getTimestamp()
             msg.findAll(issue_pattern).each { issue ->
                 jiraList << [
                     issue: issue,
                     commitMsg: msg,
-                    commitAuthor: author
+                    commitAuthor: author,
+                    commitTimestamp = timestamp
                 ]
             }
         }
@@ -74,7 +76,7 @@ def addCommentsToJiraIssues(jiraList) {
   echo "Stack inside addComments " + env.STACK
     jiraList.each { jira ->
         echo "What do we get for jira " + jira
-        def ts = new Date(jira.commit.getTimestamp())
+        def ts = new Date(jira.commitTimestamp)
         String comment = "[JENKINS-PIPELINE]\n" +
                          "Build: [" + env.STACK + currentBuild.number + "|" + currentBuild.absoluteUrl + "]\n" +
                          "Result: " + currentBuild.result + "\n" +
