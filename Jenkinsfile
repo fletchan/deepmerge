@@ -29,7 +29,7 @@ pipeline {
   post {
     always {
       script {
-        def buildLabel = ENV + "-" + currentBuild.number
+        def buildLabel = env.STACK + "-" + currentBuild.number
         def jiraList = getJiraIssuesInCurrentBuild()
         echo "List " + jiraList
         echo "Stack " + env.STACK
@@ -97,6 +97,8 @@ def addCommentsToJiraIssues(jiraList) {
 }
 
 def addLabelsToJiraIssues(jiraList) {
+  def buildLabel = env.STACK + "-" + currentBuild.number
+
   echo "Adding labels function"
     def jiraIssuesKeyList = []
     jiraList.each { jira ->
@@ -116,9 +118,9 @@ def addLabelsToJiraIssues(jiraList) {
                 labels = issue.fields.labels
             }
         }
-
+echo "Labels to add too " + labels
         labels << buildLabel
-echo "What labels will we add " + labels
+echo "Final labels " + labels
         jiraEditIssue(
             idOrKey: jira.issue,
             issue: [
