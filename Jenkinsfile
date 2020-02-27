@@ -129,7 +129,7 @@ echo "Final labels " + labels
             issue: [
                 fields: [
                     project: [ key: 'SAAS' ],
-                    labels: [ labels ]
+                    labels: labels
                 ]
             ]
         )
